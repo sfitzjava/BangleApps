@@ -114,7 +114,7 @@ function startTick(run) {
 }
 
 /* Init **********************************************/
-drawSettings()
+function drawSettings()
 {
   g.clearRect(0, 24, g.getWidth(), g.getHeight());
   g.setFontAlign(1, 0).setFont("Vector", 16 * scale);
@@ -122,7 +122,7 @@ drawSettings()
   g.drawString("settings", center.x + 32 * scale, center.y + 46 * scale);
 }
 
-drawApps()
+function drawApps()
 {
   g.clearRect(0, 24, g.getWidth(), g.getHeight());
   g.setFontAlign(1, 0).setFont("Vector", 16 * scale);

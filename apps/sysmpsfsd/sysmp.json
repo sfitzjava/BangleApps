@@ -1,7 +1,7 @@
 { "id": "sysmpsfsd",
   "name": "System Main Processing",
   "shortName":"SysMP",
-  "version":"0.03",
+  "version":"0.04",
   "description": "This application will provide full access to all applications, primary settings, core features and addin widgets, while operating as the clockface.",
   "icon": "sysmp_icon.png",
   "type": "clock",
