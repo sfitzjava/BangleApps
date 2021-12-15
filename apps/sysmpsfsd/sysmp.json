@@ -1,4 +1,3 @@
-// Create an entry in apps.json as follows:
 { "id": "sysmpsfsd",
   "name": "System Main Processing",
   "shortName":"SysMP",
