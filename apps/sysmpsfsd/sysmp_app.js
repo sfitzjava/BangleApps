@@ -16,7 +16,7 @@ const locale = require("locale");
 const storage = require('Storage');
 
 const is12Hour = (storage.readJSON("setting.json", 1) || {})["12hour"];
-const color = (storage.readJSON("ffcniftyb.json", 1) || {})["color"] || 63488 /* red */;
+const color = (storage.readJSON("sysmpsfsd.json", 1) || {})["color"] || 63488 /* red */;
 
 
 /* Clock *********************************************/
@@ -114,9 +114,52 @@ function startTick(run) {
 }
 
 /* Init **********************************************/
+drawSettings()
+{
+  g.clearRect(0, 24, g.getWidth(), g.getHeight());
+  g.setFontAlign(1, 0).setFont("Vector", 16 * scale);
+  g.drawString("page", center.x + 32 * scale, center.y - 31 * scale);
+  g.drawString("settings", center.x + 32 * scale, center.y + 46 * scale);
+}
+
+drawApps()
+{
+  g.clearRect(0, 24, g.getWidth(), g.getHeight());
+  g.setFontAlign(1, 0).setFont("Vector", 16 * scale);
+  g.drawString("page", center.x + 32 * scale, center.y - 31 * scale);
+  g.drawString("launcher", center.x + 32 * scale, center.y + 46 * scale);
+}
 
 g.clear();
 startTick(draw);
+let page=0;
+
+Bangle.on('swipe', (dir)=>{
+    stopTick();
+    page += dir;
+    if( page < -1 || page > 1)
+      page = dir;
+    switch(page)
+    {
+      case 1: // page settings
+        drawSetting();
+        break;
+
+      case -1:  // page app-launcher
+        drawApps();
+        break;
+
+      case 0: // clock face
+      default:
+        startTick(draw);
+        break;
+
+      
+
+    }
+    if(page == 0)
+      startTick(draw);
+})
 
 Bangle.on('lcdPower', (on) => {
   if (on) {
