@@ -38,10 +38,10 @@
   function showMenu(items, opt) {
     items[''] = opt || {};
     items['interval'] = {
-      value:precision,
-      onchange: percision<10000?10000:percision<15000?15000:percision<30000?30000:percision<60000?60000:1000
+      value:settings.precision,
+      onchange: settings.precision<10000?10000:settings.percision<15000?15000:settings.percision<30000?30000:settings.percision<60000?60000:1000
     };
-    items['< Back'] = back;
+    items['< Back'] = save(settings); back();
     E.showMenu(items);
   }
 
