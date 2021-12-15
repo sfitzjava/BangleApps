@@ -18,7 +18,7 @@ const storage = require('Storage');
 const is12Hour = (storage.readJSON("setting.json", 1) || {})["12hour"];
 const settingVals = storage.readJSON("sysmpsfsd.json", 1);
 const color = ( settingVals||{})["color"] || 63488 /* red */;
-const percision = ( settingVals||{})["precision"] || 1000;
+const percision = ( settingVals||{})["percision"] || 1000;
  
 /* Clock *********************************************/
 const scale = g.getWidth() / 176;
