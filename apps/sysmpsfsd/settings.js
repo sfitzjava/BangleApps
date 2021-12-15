@@ -11,7 +11,9 @@
     31: 'Blue',
     0: 'Black',
   }
-
+  const interval = {
+    0:
+  }
   function load(settings) {
     return Object.assign(settings, storage.readJSON(SETTINGS_FILE, 1) || {});
   }
@@ -22,6 +24,7 @@
 
   const settings = load({
     color: 63488 /* red */,
+    precision: 1000, /**1 sec */
   });
 
   const saveColor = (color) => () => {
@@ -32,6 +35,10 @@
 
   function showMenu(items, opt) {
     items[''] = opt || {};
+    items['interval'] = {
+      value:precision,
+      onchange: percision = percision<10000?10000:percision<15000?15000?percision<30000?30000:percision<60000?60000:1000;
+    }
     items['< Back'] = back;
     E.showMenu(items);
   }

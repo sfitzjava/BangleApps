@@ -16,35 +16,37 @@ const locale = require("locale");
 const storage = require('Storage');
 
 const is12Hour = (storage.readJSON("setting.json", 1) || {})["12hour"];
-let color = (storage.readJSON("sysmpsfsd.json", 1) || {})["color"] || 63488 /* red */;
-
-
+const settingVals = storage.readJSON("sysmpsfsd.json", 1);
+const color = ( settingVals||{})["color"] || 63488 /* red */;
+const percision = ( settingVals||{})["precision"] || 1000;
+ 
 /* Clock *********************************************/
 const scale = g.getWidth() / 176;
+const widget = 24;
 
-const screen = {
+const viewport = {
   width: g.getWidth(),
-  height: g.getHeight() - 24,
+  height: g.getHeight(),
 };
 
 const center = {
-  x: screen.width / 2,
-  y: screen.height / 2,
+  x: viewport.width / 2,
+  y: Math.round(((viewport.height - widget) / 2) + widget),
 };
 
 function d02(value) {
   return ('0' + value).substr(-2);
 }
 
-function renderEllipse(g) {
-  g.fillEllipse(center.x - 5 * scale, center.y - 70 * scale, center.x + 160 * scale, center.y + 90 * scale);
-}
-
-function renderText(g) {
+function draw() {
+  g.reset();
+  g.clearRect(0, widget, viewport.width, viewport.height);
   const now = new Date();
 
   const hour = d02(now.getHours() - (is12Hour && now.getHours() > 12 ? 12 : 0));
   const minutes = d02(now.getMinutes());
+  const sec = ':'+d02(now.getSeconds());
+
   const day = d02(now.getDate());
   const month = d02(now.getMonth() + 1);
   const year = now.getFullYear();
@@ -56,43 +58,17 @@ function renderText(g) {
   g.drawString(hour, center.x + 32 * scale, center.y - 31 * scale);
   g.drawString(minutes, center.x + 32 * scale, center.y + 46 * scale);
 
-  g.setFontAlign(1, 0).setFont("Vector", 16 * scale);
-  g.drawString(year, center.x + 80 * scale, center.y - 42 * scale);
-  g.drawString(month, center.x + 80 * scale, center.y - 26 * scale);
-  g.drawString(day, center.x + 80 * scale, center.y - 10 * scale);
-  g.drawString(month2, center.x + 80 * scale, center.y + 44 * scale);
-  g.drawString(day2, center.x + 80 * scale, center.y + 60 * scale);
+  g.fillRect(center.x + 30 * scale, center.y - 72 * scale, center.x + 32 * scale, center.y + 74 * scale);
+
+  g.setFontAlign(-1, 0).setFont("Vector", 16 * scale);
+  g.drawString(year, center.x + 40 * scale, center.y - 62 * scale);
+  g.drawString(month, center.x + 40 * scale, center.y - 44 * scale);
+  g.drawString(day, center.x + 40 * scale, center.y - 26 * scale);
+  g.drawString(sec, center.x + 40 * scale, center.y + 10 * scale);
+  g.drawString(month2, center.x + 40 * scale, center.y + 48 * scale);
+  g.drawString(day2, center.x + 40 * scale, center.y + 66 * scale);
 }
 
-const buf = Graphics.createArrayBuffer(screen.width, screen.height, 1, {
-  msb: true
-});
-
-function draw() {
-
-  const img = {
-    width: screen.width,
-    height: screen.height,
-    transparent: 0,
-    bpp: 1,
-    buffer: buf.buffer
-  };
-
-  // cleat screen area
-  g.clearRect(0, 24, g.getWidth(), g.getHeight());
-
-  // render outside text with ellipse
-  buf.clear();
-  renderText(buf.setColor(1));
-  renderEllipse(buf.setColor(0));
-  g.setColor(color).drawImage(img, 0, 24);
-
-  // render ellipse with inside text
-  buf.clear();
-  renderEllipse(buf.setColor(1));
-  renderText(buf.setColor(0));
-  g.setColor(color).drawImage(img, 0, 24);
-}
 
 
 /* Minute Ticker *************************************/
@@ -109,7 +85,7 @@ function stopTick() {
 function startTick(run) {
   stopTick();
   run();
-  ticker = setTimeout(() => startTick(run), 60000 - (Date.now() % 60000));
+  ticker = setTimeout(() => startTick(run), percision - (Date.now() % percision));
   // ticker = setTimeout(() => startTick(run), 3000);
 }
 
@@ -139,12 +115,11 @@ Bangle.on('swipe', (dir)=>{
       page = dir;
     switch(page)
     {
-      case 1: // page settings
-        color = 
+      case -1: // page settings
         drawSettings();
         break;
 
-      case -1:  // page app-launcher
+      case 1:  // page app-launcher
         drawApps();
         break;
 
@@ -155,7 +130,7 @@ Bangle.on('swipe', (dir)=>{
 
     }
 
-})
+});
 
 Bangle.on('lcdPower', (on) => {
   if (on) {
