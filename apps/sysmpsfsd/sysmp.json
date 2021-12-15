@@ -10,6 +10,8 @@
   "readme": "README.md",
   "storage": [
     {"name":"sysmpsfsd.app.js","url":"sysmp_app.js"},
-    {"name":"sysmpsfsd.img","url":"app-icon.js","evaluate":true}
-  ]
+    {"name":"sysmpsfsd.img","url":"app-icon.js","evaluate":true},
+    {"name":"sysmpsfsd.settings.js","url":"settings.js"}
+  ],
+  "data": [{"name":"sysmpsfsd.json"}]
 }
