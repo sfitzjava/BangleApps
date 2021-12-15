@@ -54,6 +54,7 @@ function draw() {
   const month2 = locale.month(now, 3);
   const day2 = locale.dow(now, 3);
 
+  g.setColor(color);
   g.setFontAlign(1, 0).setFont("Vector", 90 * scale);
   g.drawString(hour, center.x + 32 * scale, center.y - 31 * scale);
   g.drawString(minutes, center.x + 32 * scale, center.y + 46 * scale);
