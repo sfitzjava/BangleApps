@@ -4943,6 +4943,21 @@
     "storage": [
       {"name":"mytimer.app.js","url":"app.js"},
       {"name":"mytimer.img","url":"app-icon.js","evaluate":true}
+    ]  
+  },
+  { 
+    "id": "sysmpsfsd",
+    "name": "System Main Processing",
+    "shortName":"SysMP",
+    "version":"0.01",
+    "description": "This application will provide full access to all applications, primary settings, core features and addin widgets, while operating as the clockface.",
+    "icon": "sysmp_icon.png",
+    "tags": "clock",
+    "supports" : ["BANGLEJS2"],  
+    "readme": "README.md",
+    "storage": [
+      {"name":"sysmpsfsd.app.js","url":"sysmp_app.js"},
+      {"name":"sysmpsfsd.img","url":"app-icon.js","evaluate":true}
     ]
   }
 ]
