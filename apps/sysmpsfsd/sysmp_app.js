@@ -143,7 +143,7 @@ Bangle.on('swipe', (dir)=>{
     {
       case 1: // page settings
         color = 
-        drawSetting();
+        drawSettings();
         break;
 
       case -1:  // page app-launcher
