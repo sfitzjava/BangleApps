@@ -32,14 +32,14 @@
   };
 
   function selectPercision(){
-    return percision<10000?10000:percision<15000?15000?percision<30000?30000:percision<60000?60000:1000;
+    return percision<10000?10000:percision<15000?15000:percision<30000?30000:percision<60000?60000:1000;
   }
 
   function showMenu(items, opt) {
     items[''] = opt || {};
     items['interval'] = {
       value:precision,
-      onchange: selectPercision()
+      onchange: percision<10000?10000:percision<15000?15000:percision<30000?30000:percision<60000?60000:1000
     };
     items['< Back'] = back;
     E.showMenu(items);
