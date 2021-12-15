@@ -16,7 +16,7 @@ const locale = require("locale");
 const storage = require('Storage');
 
 const is12Hour = (storage.readJSON("setting.json", 1) || {})["12hour"];
-const color = (storage.readJSON("sysmpsfsd.json", 1) || {})["color"] || 63488 /* red */;
+let color = (storage.readJSON("sysmpsfsd.json", 1) || {})["color"] || 63488 /* red */;
 
 
 /* Clock *********************************************/
@@ -142,6 +142,7 @@ Bangle.on('swipe', (dir)=>{
     switch(page)
     {
       case 1: // page settings
+        color = 
         drawSetting();
         break;
 
@@ -154,11 +155,8 @@ Bangle.on('swipe', (dir)=>{
         startTick(draw);
         break;
 
-      
-
     }
-    if(page == 0)
-      startTick(draw);
+
 })
 
 Bangle.on('lcdPower', (on) => {
