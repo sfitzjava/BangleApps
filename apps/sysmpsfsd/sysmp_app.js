@@ -133,6 +133,17 @@ Bangle.on('swipe', (dir)=>{
 
 });
 
+let dragActive = false;
+
+Bangle.on('drag', (x,y,dx,dy,b)=>{
+  if(b==1)
+     console.log('b1',x,y,dx,dy);
+  else
+     console.log('b0',x,y,dx,dy);
+
+ // stopTick();
+});
+
 Bangle.on('lcdPower', (on) => {
   if (on) {
     startTick(draw);
