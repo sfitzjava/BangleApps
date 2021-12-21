@@ -128,20 +128,52 @@ Bangle.on('swipe', (dir)=>{
       default:
         startTick(draw);
         break;
-
     }
 
 });
 
 let dragActive = false;
+let startx = 0;
+let starty = 0;
 
-Bangle.on('drag', (x,y,dx,dy,b)=>{
-  if(b==1)
-     console.log('b1',x,y,dx,dy);
-  else
-     console.log('b0',x,y,dx,dy);
+Bangle.on('drag', (evt)=>{
+  stopTick();
+  
+  if(evt.b==1 && !dragActive)
+  {
+    dragActive = true;
+    startx = evt.x;
+    starty = evt.y;
+  }
+  else if(evt.b==0 && dragActive)
+  {
+    dragActive = false;
+     startx -=  evt.x;
+     starty -=  evt.y;
+    if(starty > 0 && starty > 10)
+      page += 1;
+    else if(starty < 0 && starty < -10)
+      page -= 1;
+    
+    startx=0;
+    starty=0;
+     switch(page)
+    {
+      case -1: // page settings
+        drawSettings();
+        break;
 
- // stopTick();
+      case 1:  // page app-launcher
+        drawApps();
+        break;
+
+      case 0: // clock face
+      default:
+        startTick(draw);
+        break;
+    }
+  } 
+
 });
 
 Bangle.on('lcdPower', (on) => {
