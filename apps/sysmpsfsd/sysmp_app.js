@@ -162,14 +162,14 @@ function setPage(page, dir){
     switch(page)
     {
       case -1: // page settings
-        if(LR_DIR)
+        if(dir == LR_DIR)
            drawSettings();
         else
            drawHealth();
         break;
 
       case 1:  // page app-launcher
-       if(LR_DIR)
+       if(dir == LR_DIR)
           drawApps();
        else
           drawHealth();
