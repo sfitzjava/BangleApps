@@ -146,9 +146,9 @@ Bangle.on('drag', (evt)=>{
     dragActive = false;
      startx -=  evt.x;
      starty -=  evt.y;
-    if(starty > 0 && starty > 10)
+    if(starty > 0 && starty > 50)
       page += 1;
-    else if(starty < 0 && starty < -10)
+    else if(starty < 0 && starty < -50)
       page -= 1;
     
     startx=0;
