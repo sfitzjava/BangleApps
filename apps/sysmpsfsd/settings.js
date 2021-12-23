@@ -69,27 +69,5 @@
   };
 
  E.showMenu(mainmenu);
- /*
-  function showMenu(items, opt) {
-    items[''] = opt || {};
-    items['interval'] = { E.showMenu(intervals)},
-      value : settings.precision,
-      format: v=>{ formatPercision(settings.precision+stepVal)},
-      onchange : v => { settings.precision=parsePercision(settings.precision+stepVal); }
-    };
-    items['< Back'] = ()=>{save(settings); back();};
-    E.showMenu(items);
-  }
 
-  showMenu(
-    Object.keys(colors).reduce((menu, color) => {
-      menu[colors[color]] = saveColor(color);
-      return menu;
-    }, {}),
-    {
-      title: 'Color',
-      selected: Object.keys(colors).indexOf(settings.color)
-    }
-  );
-  */
 });

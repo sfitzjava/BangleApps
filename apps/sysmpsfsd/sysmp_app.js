@@ -105,30 +105,25 @@ function drawApps(){
   g.drawString("launcher", center.x + 32 * scale, center.y + 46 * scale);
 }
 
+function drawHealth(){
+  g.clearRect(0, 24, g.getWidth(), g.getHeight());
+  g.setFontAlign(1, 0).setFont("Vector", 16 * scale);
+  g.drawString("page", center.x + 32 * scale, center.y - 31 * scale);
+  g.drawString("Health Data", center.x + 32 * scale, center.y + 46 * scale);
+}
+
 g.clear();
 startTick(draw);
 let page=0;
-
+const LR_DIR = true;
+const UD_DIR = false;
 Bangle.on('swipe', (dir)=>{
     stopTick();
     page += dir;
     if( page < -1 || page > 1)
       page = dir;
-    switch(page)
-    {
-      case -1: // page settings
-        drawSettings();
-        break;
-
-      case 1:  // page app-launcher
-        drawApps();
-        break;
-
-      case 0: // clock face
-      default:
-        startTick(draw);
-        break;
-    }
+    
+    setPage(page,LR_DIR);
 
 });
 
@@ -157,24 +152,36 @@ Bangle.on('drag', (evt)=>{
     
     startx=0;
     starty=0;
-     switch(page)
+    setPage(page, UD_DIR);
+  } 
+
+});
+
+function setPage(page, dir){
+
+    switch(page)
     {
       case -1: // page settings
-        drawSettings();
+        if(LR_DIR)
+           drawSettings();
+        else
+           drawHealth();
         break;
 
       case 1:  // page app-launcher
-        drawApps();
-        break;
+       if(LR_DIR)
+          drawApps();
+       else
+          drawHealth();
+       break;
 
       case 0: // clock face
       default:
         startTick(draw);
         break;
     }
-  } 
 
-});
+}
 
 Bangle.on('lcdPower', (on) => {
   if (on) {
