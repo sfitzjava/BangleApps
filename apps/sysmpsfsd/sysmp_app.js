@@ -117,6 +117,7 @@ startTick(draw);
 let page=0;
 const LR_DIR = true;
 const UD_DIR = false;
+
 Bangle.on('swipe', (dir)=>{
     stopTick();
     page += dir;
@@ -157,19 +158,19 @@ Bangle.on('drag', (evt)=>{
 
 });
 
-function setPage(page, dir){
+function setPage(page, left_right){
 
     switch(page)
     {
       case -1: // page settings
-        if(dir == LR_DIR)
+        if(left_right)
            drawSettings();
         else
            drawHealth();
         break;
 
       case 1:  // page app-launcher
-       if(dir == LR_DIR)
+      if(left_right)
           drawApps();
        else
           drawHealth();
